@@ -88,15 +88,17 @@ void graph::BellmanFord(int src)
 
 int main()
 {
-    graph g(5);
-    g.addedge(0,1,-1);
-    g.addedge(0,2,4);
-    g.addedge(1,2,3);
-    g.addedge(1,3,2);
-    g.addedge(1,4,2);
-    g.addedge(3,2,5);
-    g.addedge(3,1,1);
-    g.addedge(4,3,-3);
+    cout<<"Please insert the number of vertices and edges."<<endl;
+    int v,e,src,dest,w;
+    cin>>v>>e;
+    graph g(v);
+    cout<<"Please insert the source, destination of edge and its weight for given number of edges."<<endl;
+    for(int i=0;i<e;i++)
+    {
+        cin>>src>>dest>>w;
+        g.addedge(src,dest,w);
+    }
+    
     g.BellmanFord(0);
     return 0;
 }
