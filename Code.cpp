@@ -96,9 +96,10 @@ int main()
     for(int i=0;i<e;i++)
     {
         cin>>src>>dest>>w;
-        g.addedge(src,dest,w);
+        g.addedge(src-1,dest-1,w);
     }
-    
+    clock_t tStart = clock();
     g.BellmanFord(0);
+    cout<<"Time taken: "<<(double)(clock() - tStart)/CLOCKS_PER_SEC<<endl;
     return 0;
 }
