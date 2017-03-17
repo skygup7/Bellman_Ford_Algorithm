@@ -25,6 +25,7 @@ class graph
 public:
     graph(int v);
     void addedge(int src,int dest,int w);
+    void print_graph();
     void BellmanFord(int src);
 };
 
@@ -40,19 +41,62 @@ void graph::addedge(int src,int dest,int w)
 {
     adj[src].pb(make_pair(dest,w));
 }
+void graph::print_graph()
+{
+    cout<<"Vertex   Distance from Source"<<endl;
+    for(int i=0;i<u;i++)
+        cout<<i<<" \t\t "<<dist[i]<<endl;
+}
 void graph::BellmanFord(int src)
 {
+    bool flag=false;
+    int a,b,w;
     dist[src]=0;
-    
+    list<pii >::iterator it;
+    forp(i,1,u)
+    {
+        for(int s=0;s<u;s++){
+            for(it=adj[s].begin();it!=adj[s].end();it++)
+            {
+                a=s;
+                b=(*it).first;
+                w=(*it).second;
+                if(dist[a]!=INF && dist[b]>(dist[a]+w))
+                {
+                    dist[b]=dist[a]+w;
+                }
+            }
+        }
+    }
+    for(int s=0;s<u;s++){
+        for(it=adj[s].begin();it!=adj[s].end();it++)
+        {
+            a=s;
+            b=(*it).first;
+            w=(*it).second;
+            if(dist[a]!=INF && dist[b]>(dist[a]+w))
+            {
+                flag=true;
+            }
+        }
+    }
+    if(flag)
+        cout<<"Minimum distance is not possible due to the existence of nagetive cycle in the given graph."<<endl;
+    else
+        print_graph();
 }
 
 int main()
 {
-    graph g(4);
-    g.addedge(0,1,1);
-    g.addedge(0,2,1);
-    g.addedge(1,2,1);
-    g.addedge(2,0,1);
-    g.addedge(2,3,1);
-    g.addedge(3,3,1);
+    graph g(5);
+    g.addedge(0,1,-1);
+    g.addedge(0,2,4);
+    g.addedge(1,2,3);
+    g.addedge(1,3,2);
+    g.addedge(1,4,2);
+    g.addedge(3,2,5);
+    g.addedge(3,1,1);
+    g.addedge(4,3,-3);
+    g.BellmanFord(0);
+    return 0;
 }
